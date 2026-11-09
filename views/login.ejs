@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+
+<main>
+    <h2>Staff Login</h2>
+    <p>Only authorized shelter staff can log in.</p>
+
+    <% if (error) { %>
+        <p style="color: red;"><%= error %></p>
+    <% } %>
+
+    <form action="/login" method="POST">
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"
+               autocomplete="username" required>
+        <br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"
+               autocomplete="current-password" required>
+        <br><br>
+
+        <button type="submit">Login</button>
+
+    </form>
+</main>
+
+<%- include('partials/footer') %>

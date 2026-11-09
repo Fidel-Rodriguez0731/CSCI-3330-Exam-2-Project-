@@ -1,0 +1,45 @@
+<%- include('partials/header') %>
+
+<main>
+    <h2>Staff Dashboard</h2>
+    <p>Welcome to the PawFinder staff dashboard!</p>
+
+    <h3>Adoption Applications</h3>
+
+    <% if (applications.length === 0) { %>
+        <p>No adoption applications have been submitted yet.</p>
+    <% } else { %>
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Application ID</th>
+                    <th>Applicant</th>
+                    <th>Email</th>
+                    <th>Pet</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% applications.forEach(application => { %>
+                    <tr>
+                        <td><%= application.applicationId %></td>
+                        <td><%= application.applicantName %></td>
+                        <td><%= application.applicantEmail %></td>
+                        <td><%= application.petName %></td>
+                        <td><%= application.status %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } %>
+
+    <h3>Appointments</h3>
+    <p>Appointments will be displayed here.</p>
+
+    <form action="/logout" method="POST">
+        <button type="submit">Logout</button>
+    </form>
+</main>
+
+<%- include('partials/footer') %>

@@ -55,8 +55,52 @@ function createApplication(name, email, phone, petId) {
     return application;
 }
 
+function getAllApplications() {
+    return applications.map(application => {
+        const applicant = applicants.find(
+            a => a.applicantId === application.applicantId
+        );
+
+        const pet = petService.getAllPets().find(
+            p => p.petId === application.petId
+        );
+
+        return {
+            ...application,
+            applicantName: applicant.name,
+            applicantEmail: applicant.email,
+            petName: pet.name
+        };
+    });
+}
+
+
+function updateApplicationStatus(applicationId, newStatus) {
+    // Find the application using its ID
+    const application = applications.find(
+        app => app.applicationId === Number(applicationId)
+    );
+
+    // Check if the application exists
+    if (!application) {
+        throw new Error('Application not found.');
+    }
+
+    // Only allow valid statuses
+    if (newStatus !== 'Approved' && newStatus !== 'Rejected') {
+        throw new Error('Invalid application status.');
+    }
+
+    // Update the application
+    application.status = newStatus;
+
+    return application;
+}
+
 module.exports = {
     Applicant,
     AdoptionApplication,
-    createApplication
+    createApplication,
+    getAllApplications,
+    updateApplicationStatus
 };
