@@ -1,3 +1,6 @@
+require('dotenv').config();
+const session = require('express-session');
+
 const express = require('express');
 const path = require('path');
 const petRoutes = require('./routes/petRoutes');
@@ -17,10 +20,28 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Makes sure the session secret exists
+if (!process.env.SESSION_SECRET) {
+    throw new Error('SESSION_SECRET is missing from .env');
+}
+
+// Session middleware
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'lax'
+    }
+}));
+
+
 // Application routes
 app.use('/', petRoutes);
 
-// Centralized error handling middleware
+// Centrsalized error handling middleware
 app.use(errorHandler);
 
 // Start the server
