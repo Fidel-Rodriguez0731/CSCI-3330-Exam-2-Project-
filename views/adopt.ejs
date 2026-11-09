@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+
+<main>
+    <h2>Adoption Application</h2>
+    <p>Fill out the form below to apply for a pet.</p>
+
+    <form action="/applications" method="POST">
+
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br><br>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required>
+        <br><br>
+
+        <label for="petId">Select a Pet:</label>
+        <select id="petId" name="petId" required>
+            <% pets.forEach(pet => { %>
+                <option value="<%= pet.petId %>">
+                    <%= pet.name %> - <%= pet.type %>
+                </option>
+            <% }); %>
+        </select>
+        <br><br>
+
+        <button type="submit">Submit Application</button>
+
+    </form>
+</main>
+
+<%- include('partials/footer') %>
