@@ -20,9 +20,10 @@
 
         <label for="petId">Select a Pet:</label>
         <select id="petId" name="petId" required>
+            <option value="" disabled selected>Select a pet...</option>
             <% pets.forEach(pet => { %>
                 <option value="<%= pet.petId %>">
-                    <%= pet.name %> - <%= pet.type %>
+                    <%= pet.name %> (<%= pet.type %> - <%= pet.breed %>) - 📍 <%= pet.location %>
                 </option>
             <% }); %>
         </select>
