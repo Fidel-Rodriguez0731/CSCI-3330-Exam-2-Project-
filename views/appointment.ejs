@@ -1,0 +1,35 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+    <h2>Schedule a Pet Visit / Appointment</h2>
+    <form action="/appointments" method="POST" class="mt-3">
+        <div class="mb-3">
+            <label for="name" class="form-label">Your Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Your Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="appointmentDate" class="form-label">Preferred Date & Time</label>
+            <input type="datetime-local" class="form-control" id="appointmentDate" name="appointmentDate" required>
+        </div>
+        <div class="mb-3">
+            <label for="location" class="form-label">Shelter Location</label>
+            <select class="form-control" id="location" name="location" required>
+            <option value="" disabled <%= !selectedLocation ? 'selected' : '' %>>Select a shelter location...</option>
+            <option value="Mission Branch" <%= selectedLocation === 'Mission' ? 'selected' : '' %>>Mission Branch</option>
+            <option value="Edinburg Branch" <%= selectedLocation === 'Edinburg' ? 'selected' : '' %>>Edinburg Branch</option>
+            <option value="McAllen Branch" <%= selectedLocation === 'McAllen' ? 'selected' : '' %>>McAllen Branch</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="notes" class="form-label">Notes or Pet Name</label>
+            <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Book Appointment</button>
+    </form>
+</div>
+
+<%- include('partials/footer') %>
