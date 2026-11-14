@@ -48,3 +48,5 @@ app.use(errorHandler);
 app.listen(PORT, () => {
     console.log(`PawFinder server listening on http://localhost:${PORT}`);
 });
+
+app.use(express.static('public'));
