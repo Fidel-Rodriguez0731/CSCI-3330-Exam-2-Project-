@@ -24,6 +24,40 @@ class AdoptionApplication {
 const applicants = [];
 const applications = [];
 
+function getOrCreateApplicant(name, email, phone = '') {
+    if (!name?.trim() || !email?.trim()) {
+        throw new Error('Applicant name and email are required.');
+    }
+
+    const cleanEmail = email.trim().toLowerCase();
+
+    // Reuse an existing applicant with the same email
+    const existingApplicant = applicants.find(
+        applicant => applicant.email.toLowerCase() === cleanEmail
+    );
+
+    if (existingApplicant) {
+        // Save their phone number if they provide one later
+        if (typeof phone === 'string' && phone.trim()) {
+            existingApplicant.phone = phone.trim();
+        }
+
+        return existingApplicant;
+    }
+
+    // Create a new Applicant object
+    const applicant = new Applicant(
+        applicants.length + 1,
+        name.trim(),
+        cleanEmail,
+        typeof phone === 'string' ? phone.trim() : ''
+    );
+
+    applicants.push(applicant);
+
+    return applicant;
+}
+
 // Create a new adoption application
 function createApplication(name, email, phone, petId) {
     const pet = petService.getAllPets().find(
@@ -34,14 +68,9 @@ function createApplication(name, email, phone, petId) {
         throw new Error('Please enter valid information and select an available pet.');
     }
 
-    const applicant = new Applicant(
-        applicants.length + 1,
-        name.trim(),
-        email.trim(),
-        phone.trim()
-    );
+   
+    const applicant = getOrCreateApplicant(name, email, phone);
 
-    applicants.push(applicant);
 
     const application = new AdoptionApplication(
         applications.length + 1,
@@ -102,5 +131,6 @@ module.exports = {
     AdoptionApplication,
     createApplication,
     getAllApplications,
-    updateApplicationStatus
+    updateApplicationStatus,
+    getOrCreateApplicant
 };

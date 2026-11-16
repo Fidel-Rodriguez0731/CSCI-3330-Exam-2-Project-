@@ -23,4 +23,24 @@ function submitApplication(req, res) {
     }
 }
 
-module.exports = { showAdoptionForm, submitApplication };
+
+function changeApplicationStatus(req, res) {
+    const { applicationId, status } = req.body;
+
+    try {
+        applicationService.updateApplicationStatus(
+            applicationId,
+            status
+        );
+
+        res.redirect('/staff');
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+module.exports = {
+    showAdoptionForm,
+    submitApplication,
+    changeApplicationStatus
+};

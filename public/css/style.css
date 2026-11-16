@@ -193,3 +193,111 @@ footer {
     font-size: 0.9rem;
     margin-top: auto;
 }
+
+
+/* Staff Dashboard Tables */
+main table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+main table th,
+main table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+main table th {
+    background-color: #2e7d32;
+    color: white;
+}
+
+/* Fix staff action forms */
+main table td form[action^="/staff/"] {
+    display: inline-block;
+    width: auto;
+    max-width: none;
+    margin: 0 4px 0 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+main table td form[action^="/staff/"] button {
+    width: auto;
+    margin: 0;
+    padding: 8px 12px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+/* Keep wide tables from overflowing the page */
+main {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+/* Staff Dashboard Table Headers */
+main table th {
+    background-color: #334155;
+    color: white;
+    padding: 12px;
+}
+
+/* Remove oversized white boxes around action buttons */
+main table td form[action^="/staff/"] {
+    display: inline-block;
+    width: auto;
+    max-width: none;
+    padding: 0;
+    margin: 3px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+/* General Staff Buttons */
+main table td form[action^="/staff/"] button {
+    width: auto;
+    padding: 9px 15px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Green - Confirm and Approve */
+main table form:has(input[value="Confirmed"]) button,
+main table form:has(input[value="Approved"]) button {
+    background-color: #228b22;
+    color: white;
+}
+
+/* Red - Cancel and Reject */
+main table form:has(input[value="Cancelled"]) button,
+main table form:has(input[value="Rejected"]) button {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Button Hover Effects */
+main table form:has(input[value="Confirmed"]) button:hover,
+main table form:has(input[value="Approved"]) button:hover {
+    background-color: #176b17;
+}
+
+main table form:has(input[value="Cancelled"]) button:hover,
+main table form:has(input[value="Rejected"]) button:hover {
+    background-color: #b02a37;
+}
+
+/* Change existing top border to navy */
+body, header {
+    border-top-color: #334155 !important;
+}

@@ -4,6 +4,7 @@
     <h2>Staff Dashboard</h2>
     <p>Welcome to the PawFinder staff dashboard!</p>
 
+    <!-- ADOPTION APPLICATIONS -->
     <h3>Adoption Applications</h3>
 
     <% if (applications.length === 0) { %>
@@ -17,6 +18,7 @@
                     <th>Email</th>
                     <th>Pet</th>
                     <th>Status</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 
@@ -28,18 +30,125 @@
                         <td><%= application.applicantEmail %></td>
                         <td><%= application.petName %></td>
                         <td><%= application.status %></td>
+
+                        <td>
+                            <!-- Approve Application -->
+                            <form action="/staff/applications/status"
+                                  method="POST"
+                                  style="display: inline;">
+
+                                <input type="hidden"
+                                       name="applicationId"
+                                       value="<%= application.applicationId %>">
+
+                                <input type="hidden"
+                                       name="status"
+                                       value="Approved">
+
+                                <button type="submit">Approve</button>
+                            </form>
+
+                            <!-- Reject Application -->
+                            <form action="/staff/applications/status"
+                                  method="POST"
+                                  style="display: inline;">
+
+                                <input type="hidden"
+                                       name="applicationId"
+                                       value="<%= application.applicationId %>">
+
+                                <input type="hidden"
+                                       name="status"
+                                       value="Rejected">
+
+                                <button type="submit">Reject</button>
+                            </form>
+                        </td>
                     </tr>
                 <% }); %>
             </tbody>
         </table>
     <% } %>
 
-    <h3>Appointments</h3>
-    <p>Appointments will be displayed here.</p>
 
+    <!-- SCHEDULED APPOINTMENTS -->
+    <h3>Scheduled Appointments</h3>
+
+    <% if (appointments.length === 0) { %>
+        <p>No appointments have been scheduled yet.</p>
+    <% } else { %>
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Appointment ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Pet</th>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Notes</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% appointments.forEach(appointment => { %>
+                    <tr>
+                        <td><%= appointment.appointmentId %></td>
+                        <td><%= appointment.name %></td>
+                        <td><%= appointment.email %></td>
+                        <td><%= appointment.petName %></td>
+                        <td><%= appointment.appointmentDate %></td>
+                        <td><%= appointment.location %></td>
+                        <td><%= appointment.notes || 'None' %></td>
+                        <td><%= appointment.status %></td>
+
+                        <td>
+                            <!-- Confirm Appointment -->
+                            <form action="/staff/appointments/status"
+                                  method="POST"
+                                  style="display: inline;">
+
+                                <input type="hidden"
+                                       name="appointmentId"
+                                       value="<%= appointment.appointmentId %>">
+
+                                <input type="hidden"
+                                       name="status"
+                                       value="Confirmed">
+
+                                <button type="submit">Confirm</button>
+                            </form>
+
+                            <!-- Cancel Appointment -->
+                            <form action="/staff/appointments/status"
+                                  method="POST"
+                                  style="display: inline;">
+
+                                <input type="hidden"
+                                       name="appointmentId"
+                                       value="<%= appointment.appointmentId %>">
+
+                                <input type="hidden"
+                                       name="status"
+                                       value="Cancelled">
+
+                                <button type="submit">Cancel</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } %>
+
+
+    <!-- STAFF LOGOUT -->
     <form action="/logout" method="POST">
         <button type="submit">Logout</button>
     </form>
+
 </main>
 
 <%- include('partials/footer') %>
