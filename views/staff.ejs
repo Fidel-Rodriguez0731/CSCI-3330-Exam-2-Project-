@@ -1,153 +1,173 @@
 <%- include('partials/header') %>
 
-<main>
-    <h2>Staff Dashboard</h2>
-    <p>Welcome to the PawFinder staff dashboard!</p>
+<main class="site-main dashboard-page">
 
-    <!-- ADOPTION APPLICATIONS -->
-    <h3>Adoption Applications</h3>
+  <!-- Staff Dashboard Header -->
+  <div class="dashboard-head">
+    <div>
+      <span class="eyebrow">Shelter management</span>
+      <h1>Staff dashboard</h1>
+      <p>Review adoption applications and manage upcoming visits.</p>
+    </div>
+
+    <form action="/logout" method="POST" class="logout-form">
+      <button class="btn btn-secondary" type="submit">Logout</button>
+    </form>
+  </div>
+
+  <!-- Adoption Applications -->
+  <section class="dashboard-section">
+    <div class="dashboard-section-head">
+      <div>
+        <h2>Adoption applications</h2>
+        <p>Review requests from potential adopters.</p>
+      </div>
+
+      <span class="count-chip"><%= applications.length %> total</span>
+    </div>
 
     <% if (applications.length === 0) { %>
-        <p>No adoption applications have been submitted yet.</p>
+    <div class="dashboard-empty">
+      🐾
+      <strong>No applications yet.</strong>
+      <span>New adoption requests will appear here.</span>
+    </div>
     <% } else { %>
-        <table border="1" cellpadding="10">
-            <thead>
-                <tr>
-                    <th>Application ID</th>
-                    <th>Applicant</th>
-                    <th>Email</th>
-                    <th>Pet</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
 
-            <tbody>
-                <% applications.forEach(application => { %>
-                    <tr>
-                        <td><%= application.applicationId %></td>
-                        <td><%= application.applicantName %></td>
-                        <td><%= application.applicantEmail %></td>
-                        <td><%= application.petName %></td>
-                        <td><%= application.status %></td>
+    <div class="table-scroll">
+      <table class="dashboard-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Applicant</th>
+            <th>Email</th>
+            <th>Pet</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
 
-                        <td>
-                            <!-- Approve Application -->
-                            <form action="/staff/applications/status"
-                                  method="POST"
-                                  style="display: inline;">
+        <tbody>
+          <% applications.forEach(application => { %>
+          <tr>
+            <td>#<%= application.applicationId %></td>
+            <td><%= application.applicantName %></td>
+            <td><%= application.applicantEmail %></td>
+            <td><%= application.petName %></td>
 
-                                <input type="hidden"
-                                       name="applicationId"
-                                       value="<%= application.applicationId %>">
+            <td>
+              <span class="status-chip status-<%= String(application.status).toLowerCase() %>">
+                <%= application.status %>
+              </span>
+            </td>
 
-                                <input type="hidden"
-                                       name="status"
-                                       value="Approved">
+            <td>
+              <div class="action-group">
 
-                                <button type="submit">Approve</button>
-                            </form>
+                <!-- Approve Application -->
+                <form action="/staff/applications/status" method="POST">
+                  <input type="hidden" name="applicationId" value="<%= application.applicationId %>">
+                  <input type="hidden" name="status" value="Approved">
+                  <button class="action-btn action-approve" type="submit">Approve</button>
+                </form>
 
-                            <!-- Reject Application -->
-                            <form action="/staff/applications/status"
-                                  method="POST"
-                                  style="display: inline;">
+                <!-- Reject Application -->
+                <form action="/staff/applications/status" method="POST">
+                  <input type="hidden" name="applicationId" value="<%= application.applicationId %>">
+                  <input type="hidden" name="status" value="Rejected">
+                  <button class="action-btn action-reject" type="submit">Reject</button>
+                </form>
 
-                                <input type="hidden"
-                                       name="applicationId"
-                                       value="<%= application.applicationId %>">
+              </div>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
 
-                                <input type="hidden"
-                                       name="status"
-                                       value="Rejected">
-
-                                <button type="submit">Reject</button>
-                            </form>
-                        </td>
-                    </tr>
-                <% }); %>
-            </tbody>
-        </table>
     <% } %>
+  </section>
 
+  <!-- Scheduled Appointments -->
+  <section class="dashboard-section">
+    <div class="dashboard-section-head">
+      <div>
+        <h2>Scheduled appointments</h2>
+        <p>Confirm or cancel requested visits.</p>
+      </div>
 
-    <!-- SCHEDULED APPOINTMENTS -->
-    <h3>Scheduled Appointments</h3>
+      <span class="count-chip"><%= appointments.length %> total</span>
+    </div>
 
     <% if (appointments.length === 0) { %>
-        <p>No appointments have been scheduled yet.</p>
+    <div class="dashboard-empty">
+      📅
+      <strong>No appointments yet.</strong>
+      <span>New visit requests will appear here.</span>
+    </div>
     <% } else { %>
-        <table border="1" cellpadding="10">
-            <thead>
-                <tr>
-                    <th>Appointment ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Pet</th>
-                    <th>Date</th>
-                    <th>Location</th>
-                    <th>Notes</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
 
-            <tbody>
-                <% appointments.forEach(appointment => { %>
-                    <tr>
-                        <td><%= appointment.appointmentId %></td>
-                        <td><%= appointment.name %></td>
-                        <td><%= appointment.email %></td>
-                        <td><%= appointment.petName %></td>
-                        <td><%= appointment.appointmentDate %></td>
-                        <td><%= appointment.location %></td>
-                        <td><%= appointment.notes || 'None' %></td>
-                        <td><%= appointment.status %></td>
+    <div class="table-scroll">
+      <table class="dashboard-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Pet</th>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Notes</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
 
-                        <td>
-                            <!-- Confirm Appointment -->
-                            <form action="/staff/appointments/status"
-                                  method="POST"
-                                  style="display: inline;">
+        <tbody>
+          <% appointments.forEach(appointment => { %>
+          <tr>
+            <td>#<%= appointment.appointmentId %></td>
+            <td><%= appointment.name %></td>
+            <td><%= appointment.email %></td>
+            <td><%= appointment.petName %></td>
+            <td><%= appointment.appointmentDate %></td>
+            <td><%= appointment.location %></td>
+            <td><%= appointment.notes || '—' %></td>
 
-                                <input type="hidden"
-                                       name="appointmentId"
-                                       value="<%= appointment.appointmentId %>">
+            <td>
+              <span class="status-chip status-<%= String(appointment.status).toLowerCase() %>">
+                <%= appointment.status %>
+              </span>
+            </td>
 
-                                <input type="hidden"
-                                       name="status"
-                                       value="Confirmed">
+            <td>
+              <div class="action-group">
 
-                                <button type="submit">Confirm</button>
-                            </form>
+                <!-- Confirm Appointment -->
+                <form action="/staff/appointments/status" method="POST">
+                  <input type="hidden" name="appointmentId" value="<%= appointment.appointmentId %>">
+                  <input type="hidden" name="status" value="Confirmed">
+                  <button class="action-btn action-approve" type="submit">Confirm</button>
+                </form>
 
-                            <!-- Cancel Appointment -->
-                            <form action="/staff/appointments/status"
-                                  method="POST"
-                                  style="display: inline;">
+                <!-- Cancel Appointment -->
+                <form action="/staff/appointments/status" method="POST">
+                  <input type="hidden" name="appointmentId" value="<%= appointment.appointmentId %>">
+                  <input type="hidden" name="status" value="Cancelled">
+                  <button class="action-btn action-reject" type="submit">Cancel</button>
+                </form>
 
-                                <input type="hidden"
-                                       name="appointmentId"
-                                       value="<%= appointment.appointmentId %>">
+              </div>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
 
-                                <input type="hidden"
-                                       name="status"
-                                       value="Cancelled">
-
-                                <button type="submit">Cancel</button>
-                            </form>
-                        </td>
-                    </tr>
-                <% }); %>
-            </tbody>
-        </table>
     <% } %>
-
-
-    <!-- STAFF LOGOUT -->
-    <form action="/logout" method="POST">
-        <button type="submit">Logout</button>
-    </form>
+  </section>
 
 </main>
 
