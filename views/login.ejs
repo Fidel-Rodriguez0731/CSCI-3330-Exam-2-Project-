@@ -1,28 +1,46 @@
 <%- include('partials/header') %>
 
-<main>
-    <h2>Staff Login</h2>
-    <p>Only authorized shelter staff can log in.</p>
+<main class="site-main form-page">
 
+  <!-- Staff Login Introduction -->
+  <div class="page-intro narrow">
+    <span class="eyebrow">Shelter team</span>
+    <h1>Staff login</h1>
+    <p>
+      Only authorized PawFinder team members can sign in below which in this case
+      is just me and fidel so bye
+    </p>
+  </div>
+
+  <!-- Staff Login Form -->
+  <form class="form-card login-card" action="/login" method="POST">
+
+    <!-- Display Login Error -->
     <% if (error) { %>
-        <p style="color: red;"><%= error %></p>
+    <p class="form-alert" role="alert">
+      <%= error %>
+    </p>
     <% } %>
 
-    <form action="/login" method="POST">
+    <!-- Username -->
+    <div class="field">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" autocomplete="username" required>
+    </div>
 
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username"
-               autocomplete="username" required>
-        <br><br>
+    <!-- Password -->
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" autocomplete="current-password" required>
+    </div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password"
-               autocomplete="current-password" required>
-        <br><br>
+    <!-- Login Button -->
+    <button type="submit" class="btn btn-primary btn-full">
+      Sign In
+    </button>
 
-        <button type="submit">Login</button>
+  </form>
 
-    </form>
 </main>
 
 <%- include('partials/footer') %>

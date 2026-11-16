@@ -1,37 +1,84 @@
 <%- include('partials/header') %>
 
-<main>
-    <h2>Adoption Application</h2>
-    <p>Fill out the form below to apply for a pet.</p>
+<main class="site-main form-page">
 
-    <form action="/applications" method="POST">
+  <!-- Page Introduction -->
+  <div class="page-intro narrow">
+    <span class="eyebrow">A new beginning</span>
+    <h1>Adoption application</h1>
+    <p>
+      Ready to take the next step? Tell us a little about yourself
+      and the pet you'd love to welcome home.
+    </p>
+  </div>
 
-        <label for="name">Full Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br><br>
+  <div class="form-layout">
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br><br>
+    <!-- Adoption Application Form -->
+    <form action="/applications" method="POST" class="form-card">
+      <h2>Your information</h2>
+      <p class="form-hint">All fields marked * are required.</p>
 
-        <label for="phone">Phone Number:</label>
-        <input type="tel" id="phone" name="phone" required>
-        <br><br>
+      <!-- Full Name -->
+      <div class="field">
+        <label for="name">Full name *</label>
+        <input type="text" id="name" name="name" placeholder="Your first and last name" required>
+      </div>
 
-        <label for="petId">Select a Pet:</label>
+      <!-- Email Address -->
+      <div class="field">
+        <label for="email">Email address *</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+      </div>
+
+      <!-- Phone Number -->
+      <div class="field">
+        <label for="phone">Phone number *</label>
+        <input type="tel" id="phone" name="phone" placeholder="(956) 555-0123" required>
+      </div>
+
+      <!-- Available Pet Selection -->
+      <div class="field">
+        <label for="petId">Which pet are you interested in? *</label>
+
         <select id="petId" name="petId" required>
-            <option value="" disabled selected>Select a pet...</option>
-            <% pets.forEach(pet => { %>
-                <option value="<%= pet.petId %>">
-                    <%= pet.name %> (<%= pet.type %> - <%= pet.breed %>) - 📍 <%= pet.location %>
-                </option>
-            <% }); %>
-        </select>
-        <br><br>
+          <option value="" disabled selected>
+            Select an available pet
+          </option>
 
-        <button type="submit">Submit Application</button>
+          <% pets.forEach(pet => { %>
+          <option value="<%= pet.petId %>">
+            <%= pet.name %> · <%= pet.breed %> · <%= pet.location %>
+          </option>
+          <% }); %>
+        </select>
+      </div>
+
+      <!-- Submit Application -->
+      <button type="submit" class="btn btn-primary btn-full">
+        Submit Application →
+      </button>
 
     </form>
+
+    <!-- Adoption Information Card -->
+    <aside class="help-card">
+      <span class="help-emoji">💚</span>
+      <h3>Thank you for choosing adoption.</h3>
+
+      <p>
+        Every application is reviewed by our shelter staff.
+        We're happy to help you find a companion that's a
+        great fit for your home.
+      </p>
+
+      <a class="text-link" href="/pets">
+        Explore available pets →
+      </a>
+    </aside>
+
+  </div>
+
 </main>
 
 <%- include('partials/footer') %>
