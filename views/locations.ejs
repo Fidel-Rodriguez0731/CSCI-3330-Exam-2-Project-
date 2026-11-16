@@ -1,11 +1,19 @@
 <%- include('partials/header') %>
 
 <main class="container mt-4">
+
+    <%
+        const mission = shelters.find(s => s.shelterId === 1);
+        const edinburg = shelters.find(s => s.shelterId === 2);
+        const mcallen = shelters.find(s => s.shelterId === 3);
+    %>
+
     <h2>Our Shelter Locations</h2>
     <p>Visit us at any of our Rio Grande Valley shelters to meet your future pet!</p>
 
     <div class="card mb-3 p-3">
-        <h3>Mission Branch 🐾</h3>
+        <h3><%= mission.name %> 🐾</h3>
+        <p><strong>Available Pets:</strong> <%= mission.availablePets.length %></p>
         <p><strong>Address:</strong> 123 Rescue Way, Mission, TX 78572</p>
         <p><strong>Hours:</strong> Mon – Sat: 9:00 AM – 5:00 PM</p>
         <p><strong>Phone:</strong> (956) 555-0199</p>
@@ -13,7 +21,8 @@
     </div>
 
     <div class="card mb-3 p-3">
-        <h3>Edinburg Branch 🐾</h3>
+        <h3><%= edinburg.name %> 🐾</h3>
+        <p><strong>Available Pets:</strong> <%= edinburg.availablePets.length %></p>
         <p><strong>Address:</strong> 456 Adoption Blvd, Edinburg, TX 78539</p>
         <p><strong>Hours:</strong> Mon – Sat: 9:00 AM – 5:00 PM</p>
         <p><strong>Phone:</strong> (956) 555-0144</p>
@@ -21,7 +30,8 @@
     </div>
 
     <div class="card mb-3 p-3">
-        <h3>McAllen Branch 🐾</h3>
+        <h3><%= mcallen.name %> 🐾</h3>
+        <p><strong>Available Pets:</strong> <%= mcallen.availablePets.length %></p>
         <p><strong>Address:</strong> 789 Paw Street, McAllen, TX 78501</p>
         <p><strong>Hours:</strong> Mon – Sat: 9:00 AM – 5:00 PM</p>
         <p><strong>Phone:</strong> (956) 555-0177</p>
